@@ -446,6 +446,31 @@
             font-weight: bold;
         }
 
+            /* Toast notification depuis le haut */
+            .toast {
+                position: fixed;
+                top: -100px; /* caché par défaut */
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(255, 255, 255, 0.05);
+                backdrop-filter: blur(20px);
+                color: #fff;
+                padding: 20px 30px;
+                border-radius: 15px;
+                border: 1px solid rgba(255,255,255,0.1);
+                box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+                font-weight: 600;
+                z-index: 1000;
+                transition: top 0.5s ease, opacity 0.5s ease;
+                opacity: 0;
+            }
+
+            /* Toast visible */
+            .toast.show {
+                top: 20px;
+                opacity: 1;
+            }
+
         @media (max-width: 768px) {
             body {
                 padding: 10px;
@@ -694,13 +719,66 @@
                 <h2>Contactez-moi</h2>
                 <p class="subtitle">Pour d'autres informations, demandes ou collaborations</p>
                 <div class="contact-links">
-                    <a href="mailto:mromboutsldv@gmail.com" class="contact-btn">📧 Email</a>
-                    <a href="tel:+33783877074" class="contact-btn">📱 Téléphone</a>
+                    <a href="#" id="email-btn" class="contact-btn">📧 Email</a>
+                    <a href="#" id="phone-btn" class="contact-btn">📱 Téléphone</a>
                     <a href="https://www.linkedin.com/in/maxime-rombouts/" target="_blank" class="contact-btn">💼 LinkedIn</a>
                     <a href="https://github.com/Maxime-Rombouts" target="_blank" class="contact-btn">🐱 GitHub</a>
                 </div>
             </div>
+                <div id="phone-toast" class="toast">
+                    📞 Mon numéro : <strong>+33 7 83 87 70 74</strong>
+                </div>
+                <div id="email-toast" class="toast">
+                    ✉️ Mon email : <strong>mromboutsldv@gmail.com</strong>
+                </div>
         </div>
     </div>
+
+<script>
+    const phoneBtn = document.getElementById('phone-btn');
+    const phoneToast = document.getElementById('phone-toast');
+    const emailBtn = document.getElementById('email-btn');
+    const emailToast = document.getElementById('email-toast');
+
+    // Fonction pour gérer le toast avec pause au survol
+    function showToast(toast, duration = 2500) {
+        toast.classList.add('show');
+
+        let hideTimeout;
+
+        // Lance le timer pour cacher le toast
+        function startTimer() {
+            hideTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, duration);
+        }
+
+        startTimer();
+
+        // Pause le timer quand la souris est dessus
+        toast.addEventListener('mouseenter', () => {
+            clearTimeout(hideTimeout);
+        });
+
+        // Reprend le timer quand la souris sort
+        toast.addEventListener('mouseleave', () => {
+            startTimer();
+        });
+    }
+
+    // Click sur le bouton téléphone
+    phoneBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        showToast(phoneToast);
+    });
+
+    // Click sur le bouton email
+    emailBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        showToast(emailToast);
+    });
+</script>
+
+
 </body>
 </html>
