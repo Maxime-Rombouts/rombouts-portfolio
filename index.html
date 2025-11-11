@@ -307,6 +307,18 @@
             transform: translateY(-2px) scale(1.02);
         }
 
+        .experience-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px 40px;
+            margin-top: 15px;
+        }
+
+        .experience-column {
+            display: flex;
+            flex-direction: column;
+        }
+        
         .experience-item {
             padding: 15px 0;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
@@ -530,35 +542,58 @@
                 </div>
             </div>
 
-            <div class="card">
-                <div class="card-icon">📊</div>
-                <h3>Expérience Professionnelle</h3>
-                <div class="experience-item">
-                    <div class="exp-title">Technicien Exploitation Supervision</div>
-                    <div class="exp-company">Okaidi - Service Exploitation</div>
-                    <div class="exp-period">2025 - Stage 6 semaines</div>
+        <div class="card">
+            <div class="card-icon">📊</div>
+            <h3>Expérience Professionnelle</h3>
+
+            <div class="experience-grid">
+                <div class="experience-column">
+                    <div class="experience-item">
+                        <div class="exp-title">Technicien Exploitation Supervision</div>
+                        <div class="exp-company">Okaidi - Service Exploitation</div>
+                        <div class="exp-period">2025 - Stage 6 semaines</div>
+                    </div>
+                    <div class="experience-item">
+                        <div class="exp-title">Développeur Front-End</div>
+                        <div class="exp-company">Kiabi - Service Catalogue</div>
+                        <div class="exp-period">2024 - Stage 2 mois</div>
+                    </div>
+                    <div class="experience-item">
+                        <div class="exp-title">Développeur Web et d'Applications</div>
+                        <div class="exp-company">Fédération SCV</div>
+                        <div class="exp-period">2023 - Stage 2 mois</div>
+                    </div>
+                    <div class="experience-item">
+                        <div class="exp-title">Technicien de maintenance</div>
+                        <div class="exp-company">Kiabi - Service DSI</div>
+                        <div class="exp-period">2022 - Stage 1 mois</div>
+                    </div>
                 </div>
-                <div class="experience-item">
-                    <div class="exp-title">Développeur Front-End</div>
-                    <div class="exp-company">Kiabi - Service Catalogue</div>
-                    <div class="exp-period">2024 - Stage 2 mois</div>
-                </div>
-                <div class="experience-item">
-                    <div class="exp-title">Développeur Web et d'Applications</div>
-                    <div class="exp-company">Fédération SCV</div>
-                    <div class="exp-period">2023 - Stage 2 mois</div>
-                </div>
-                <div class="experience-item">
-                    <div class="exp-title">Technicien de maintenance</div>
-                    <div class="exp-company">Kiabi - Service DSI</div>
-                    <div class="exp-period">2022 - Stage 1 mois</div>
-                </div>
-                <div class="experience-item">
-                    <div class="exp-title">Technicien informatique</div>
-                    <div class="exp-company">Auchan Retail - Service Proxy</div>
-                    <div class="exp-period">2022 - Stage 1 mois</div>
+
+                <div class="experience-column">
+                    <div class="experience-item">
+                        <div class="exp-title">Technicien informatique</div>
+                        <div class="exp-company">Auchan Retail - Service Proxy</div>
+                        <div class="exp-period">2022 - Stage 1 mois</div>
+                    </div>
+                    <div class="experience-item">
+                        <div class="exp-title">Technicien maintenance</div>
+                        <div class="exp-company">Lycées Saint Vincent de Paul / Notre Dame du Sacré Cœur</div>
+                        <div class="exp-period">2021 - Stage 1 mois</div>
+                    </div>
+                        <div class="experience-item">
+                        <div class="exp-title">Technicien Support Informatique</div>
+                        <div class="exp-company">Mairie de Wattrelos - Service Informatique</div>
+                        <div class="exp-period">2021 - Stage 1 mois</div>
+                    </div>
+                    <div class="experience-item">
+                        <div class="exp-title">Technicien Support Informatique</div>
+                        <div class="exp-company">Mairie de Wattrelos - Service Informatique</div>
+                        <div class="exp-period">2019 - Stage 1 mois</div>
+                    </div>
                 </div>
             </div>
+        </div>
 
             <div class="card">
                 <div class="card-icon">💻</div>
