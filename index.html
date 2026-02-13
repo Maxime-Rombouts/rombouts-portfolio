@@ -1,15 +1,26 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio - Maxime ROMBOUTS</title>
+    <meta name="description" content="Portfolio de Maxime Rombouts - Technicien Support Informatique & Maintenance, spécialisé en infrastructures réseau et développement web.">
     <link rel="icon" type="image/png" href="./PortfolioIcon.png">
     <style>
-        * {
+        /* ============================================
+           RESET & BASE
+           ============================================ */
+        *,
+        *::before,
+        *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -17,35 +28,156 @@
             background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
             color: #fff;
             min-height: 100vh;
-            padding: 20px;
+            padding: 24px;
+            padding-top: 90px;
+            line-height: 1.6;
         }
 
-        .dashboard {
-            max-width: 1400px;
+        /* ============================================
+           NAVBAR — sticky glassmorphism
+           ============================================ */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 900;
+            background: rgba(15, 15, 15, 0.8);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(10, 10, 10, 0.95);
+            box-shadow: 0 6px 32px rgba(0, 0, 0, 0.6);
+        }
+
+        .navbar-inner {
+            max-width: 900px;
             margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            height: 60px;
         }
 
+        .navbar-brand {
+            font-size: 1.15em;
+            font-weight: 700;
+            color: #fff;
+            text-decoration: none;
+            letter-spacing: -0.3px;
+            transition: opacity 0.3s ease;
+        }
+
+        .navbar-brand:hover {
+            opacity: 0.8;
+        }
+
+        .navbar-links {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            list-style: none;
+        }
+
+        .navbar-links a {
+            color: #999;
+            text-decoration: none;
+            font-size: 0.88em;
+            font-weight: 500;
+            padding: 8px 14px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .navbar-links a:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .navbar-links a.active {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        /* Hamburger — mobile only */
+        .navbar-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 32px;
+            height: 32px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .navbar-toggle span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: #fff;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-toggle.open span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .navbar-toggle.open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .navbar-toggle.open span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* ============================================
+           LAYOUT — single column, card by card
+           ============================================ */
+        .dashboard {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* ============================================
+           HEADER CARD
+           ============================================ */
         .header {
-            margin-bottom: 40px;
             padding: 40px;
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
         .header-content {
             display: flex;
             align-items: flex-start;
-            gap: 40px;
+            gap: 32px;
             flex-wrap: wrap;
         }
 
         .profile-photo {
-            width: 140px;
-            height: 140px;
+            width: 130px;
+            height: 130px;
             border-radius: 50%;
             overflow: hidden;
             flex-shrink: 0;
@@ -73,20 +205,21 @@
 
         .header-text {
             flex: 1;
-            min-width: 300px;
+            min-width: 250px;
         }
 
         .header-text h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
+            font-size: 2.4em;
+            margin-bottom: 8px;
             background: linear-gradient(135deg, #fff 0%, #ccc 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            letter-spacing: -0.5px;
         }
 
         .subtitle {
-            font-size: 1.2em;
+            font-size: 1.15em;
             color: #aaa;
             margin-bottom: 20px;
             font-weight: 500;
@@ -94,14 +227,14 @@
 
         .header-info {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-top: 20px;
         }
 
         .info-block {
             background: rgba(255, 255, 255, 0.05);
-            padding: 15px 20px;
+            padding: 14px 18px;
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.08);
             transition: all 0.3s ease;
@@ -114,46 +247,44 @@
         }
 
         .info-label {
-            font-size: 0.85em;
+            font-size: 0.82em;
             color: #888;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             font-weight: 600;
         }
 
         .info-value {
-            font-size: 1.1em;
+            font-size: 1.05em;
             color: #fff;
             font-weight: 500;
         }
 
         .header-about {
-            margin-top: 25px;
-            padding: 20px;
+            margin-top: 22px;
+            padding: 18px 20px;
             background: rgba(255, 255, 255, 0.03);
             border-radius: 12px;
             border-left: 3px solid rgba(255, 255, 255, 0.2);
-            line-height: 1.6;
+            line-height: 1.7;
             color: #bbb;
+            font-size: 0.95em;
         }
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            max-width: 1400px;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
+        /* ============================================
+           GENERIC CARD — glassmorphism
+           ============================================ */
         .card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-radius: 20px;
-            padding: 30px;
+            padding: 32px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -166,74 +297,140 @@
             left: 0;
             right: 0;
             height: 1px;
-            background: linear-gradient(90deg, 
-                transparent 0%, 
-                rgba(255, 255, 255, 0.3) 50%, 
-                transparent 100%);
+            background: linear-gradient(90deg,
+                    transparent 0%,
+                    rgba(255, 255, 255, 0.3) 50%,
+                    transparent 100%);
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            transform: translateY(-4px);
+            box-shadow:
+                0 12px 48px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
             border-color: rgba(255, 255, 255, 0.2);
         }
 
         .card-icon {
-            width: 60px;
-            height: 60px;
+            width: 56px;
+            height: 56px;
             background: linear-gradient(135deg, #3a3a3a 0%, #2a2a2a 100%);
-            border-radius: 15px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 30px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            font-size: 28px;
+            margin-bottom: 18px;
+            box-shadow:
+                0 4px 16px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
         .card h3 {
-            font-size: 1.3em;
-            margin-bottom: 10px;
+            font-size: 1.25em;
+            margin-bottom: 8px;
             font-weight: 600;
         }
 
-        .card p {
+        .card > p {
             color: #999;
             line-height: 1.6;
-            margin-bottom: 15px;
+            margin-bottom: 16px;
+            font-size: 0.95em;
         }
 
-        .stat {
+        /* ============================================
+           EXPERIENCE
+           ============================================ */
+        .experience-list {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            flex-direction: column;
+            gap: 0;
+            margin-top: 12px;
         }
 
-        .stat-label {
-            color: #666;
+        .experience-item {
+            padding: 14px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
         }
 
-        .stat-value {
+        .experience-item:first-child {
+            border-top: none;
+            padding-top: 0;
+        }
+
+        .exp-title {
             font-weight: 600;
             color: #fff;
+            margin-bottom: 4px;
         }
 
+        .exp-company {
+            color: #999;
+            font-size: 0.9em;
+            margin-bottom: 4px;
+        }
+
+        .exp-period {
+            color: #666;
+            font-size: 0.85em;
+        }
+
+        .year-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.08);
+            color: #ccc;
+            font-size: 0.78em;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 6px;
+            letter-spacing: 0.3px;
+        }
+
+        .exp-location {
+            color: #777;
+            font-size: 0.85em;
+            font-style: italic;
+            margin-top: 2px;
+        }
+
+        .extra-year {
+            font-size: 0.85em;
+            color: #aaa;
+            margin-top: 2px;
+            font-style: italic;
+        }
+
+        /* Columns for experience (desktop) */
+        .experience-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px 40px;
+            margin-top: 12px;
+        }
+
+        .experience-column {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ============================================
+           SKILL TAGS
+           ============================================ */
         .skills {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
-            margin-top: 15px;
+            margin-top: 14px;
         }
 
         .skill-tag {
             background: rgba(255, 255, 255, 0.08);
             padding: 8px 16px;
             border-radius: 20px;
-            font-size: 0.9em;
+            font-size: 0.88em;
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
@@ -244,27 +441,25 @@
         .skill-tag:hover {
             background: rgba(255, 255, 255, 0.15);
             transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            box-shadow:
+                0 6px 20px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
             border-color: rgba(255, 255, 255, 0.2);
         }
 
-        /* Animation décalée pour chaque skill-tag */
-        .skill-tag:nth-child(1) { animation-delay: 0.05s; }
-        .skill-tag:nth-child(2) { animation-delay: 0.1s; }
-        .skill-tag:nth-child(3) { animation-delay: 0.15s; }
-        .skill-tag:nth-child(4) { animation-delay: 0.2s; }
-        .skill-tag:nth-child(5) { animation-delay: 0.25s; }
-        .skill-tag:nth-child(6) { animation-delay: 0.3s; }
-        .skill-tag:nth-child(7) { animation-delay: 0.35s; }
-        .skill-tag:nth-child(8) { animation-delay: 0.4s; }
-        .skill-tag:nth-child(9) { animation-delay: 0.45s; }
-        .skill-tag:nth-child(10) { animation-delay: 0.5s; }
+        /* Staggered animation */
+        .skill-tag:nth-child(1)  { animation-delay: 0.05s; }
+        .skill-tag:nth-child(2)  { animation-delay: 0.10s; }
+        .skill-tag:nth-child(3)  { animation-delay: 0.15s; }
+        .skill-tag:nth-child(4)  { animation-delay: 0.20s; }
+        .skill-tag:nth-child(5)  { animation-delay: 0.25s; }
+        .skill-tag:nth-child(6)  { animation-delay: 0.30s; }
+        .skill-tag:nth-child(7)  { animation-delay: 0.35s; }
+        .skill-tag:nth-child(8)  { animation-delay: 0.40s; }
+        .skill-tag:nth-child(9)  { animation-delay: 0.45s; }
+        .skill-tag:nth-child(10) { animation-delay: 0.50s; }
         .skill-tag:nth-child(11) { animation-delay: 0.55s; }
-        .skill-tag:nth-child(12) { animation-delay: 0.6s; }
-        .skill-tag:nth-child(13) { animation-delay: 0.65s; }
-        .skill-tag:nth-child(14) { animation-delay: 0.7s; }
-        .skill-tag:nth-child(15) { animation-delay: 0.75s; }
+        .skill-tag:nth-child(12) { animation-delay: 0.60s; }
 
         @keyframes fadeInUp {
             from {
@@ -277,15 +472,18 @@
             }
         }
 
+        /* ============================================
+           CERTIFICATIONS
+           ============================================ */
         .certification-list {
-            margin-top: 15px;
+            margin-top: 14px;
         }
 
         .cert-item {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             padding: 12px 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
         }
 
         .cert-item:first-child {
@@ -294,8 +492,10 @@
         }
 
         .cert-icon {
-            font-size: 1.5em;
-            margin-right: 12px;
+            font-size: 1.4em;
+            margin-right: 14px;
+            flex-shrink: 0;
+            margin-top: 2px;
         }
 
         .cert-info {
@@ -306,6 +506,7 @@
             font-weight: 600;
             color: #fff;
             margin-bottom: 2px;
+            line-height: 1.4;
         }
 
         .cert-date {
@@ -314,28 +515,32 @@
         }
 
         .cert-source {
-            font-size: 0.75em;
+            font-size: 0.78em;
             color: #999;
             font-style: italic;
             margin-top: 2px;
         }
 
+        /* ============================================
+           CV DOWNLOAD BUTTON
+           ============================================ */
         .cv-download {
-            margin-top: 20px;
+            margin-top: 18px;
             text-align: center;
         }
 
         .cv-btn {
             display: inline-block;
             background: linear-gradient(135deg, #3a3a3a 0%, #2a2a2a 100%);
-            padding: 12px 30px;
-            border-radius: 15px;
+            padding: 12px 32px;
+            border-radius: 14px;
             text-decoration: none;
             color: #fff;
             font-weight: 500;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            box-shadow:
+                0 4px 16px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             overflow: hidden;
@@ -361,7 +566,7 @@
 
         .cv-btn:hover {
             background: rgba(255, 255, 255, 0.12);
-            transform: translateY(-5px) scale(1.05);
+            transform: translateY(-4px) scale(1.04);
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
             border-color: rgba(255, 255, 255, 0.2);
         }
@@ -370,88 +575,45 @@
             transform: translateY(-2px) scale(1.02);
         }
 
-        .experience-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px 40px;
-            margin-top: 15px;
-        }
-
-        .experience-column {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .experience-item {
-            padding: 15px 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .experience-item:first-child {
-            border-top: none;
-            padding-top: 0;
-        }
-
-        .exp-title {
-            font-weight: 600;
-            color: #fff;
-            margin-bottom: 5px;
-        }
-
-        .exp-company {
-            color: #999;
-            font-size: 0.9em;
-            margin-bottom: 5px;
-        }
-
-        .exp-period {
-            color: #666;
-            font-size: 0.85em;
-        }
-
-        .exp-location {
-            color: #777;
-            font-size: 0.85em;
-            font-style: italic;
-            margin-top: 3px;
-        }
-
-        .extra-year {
-            font-size: 0.85em;
-            color: #aaa;
-            margin-top: 3px;
-            font-style: italic;
-        }
-
+        /* ============================================
+           CONTACT CARD
+           ============================================ */
         .contact-card {
-            grid-column: 1 / -1;
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-radius: 20px;
             padding: 40px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
             text-align: center;
+        }
+
+        .contact-card h2 {
+            font-size: 1.5em;
+            margin-bottom: 6px;
         }
 
         .contact-links {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 16px;
             margin-top: 20px;
             flex-wrap: wrap;
         }
 
         .contact-btn {
             background: rgba(255, 255, 255, 0.08);
-            padding: 12px 30px;
-            border-radius: 15px;
+            padding: 12px 28px;
+            border-radius: 14px;
             text-decoration: none;
             color: #fff;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            box-shadow:
+                0 4px 16px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             font-weight: 500;
             position: relative;
@@ -484,140 +646,341 @@
             transform: translateY(-1px) scale(1.02);
         }
 
-        .service-list {
-            margin-top: 15px;
+        /* ============================================
+           TOAST NOTIFICATION
+           ============================================ */
+        .toast {
+            position: fixed;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(30, 30, 30, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            color: #fff;
+            padding: 18px 28px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            font-weight: 600;
+            z-index: 1000;
+            transition: top 0.5s ease, opacity 0.5s ease;
+            opacity: 0;
+            white-space: nowrap;
         }
 
-        .service-item {
+        .toast.show {
+            top: 74px;
+            opacity: 1;
+        }
+
+        /* ============================================
+           FOOTER
+           ============================================ */
+        .footer {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 36px 32px 28px;
+        }
+
+        .footer-inner {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 32px;
+            margin-bottom: 24px;
+        }
+
+        .footer-brand h4 {
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .footer-brand p {
+            color: #777;
+            font-size: 0.88em;
+            line-height: 1.5;
+        }
+
+        .footer-col h5 {
+            font-size: 0.82em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #888;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-col ul li a {
+            color: #999;
+            text-decoration: none;
+            font-size: 0.88em;
+            transition: color 0.3s ease;
+        }
+
+        .footer-col ul li a:hover {
+            color: #fff;
+        }
+
+        .footer-divider {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            margin: 0;
+        }
+
+        .footer-bottom {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            padding: 10px 0;
-            color: #ccc;
+            padding-top: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
-        .service-item::before {
-            content: '✓';
-            display: inline-block;
-            width: 24px;
-            height: 24px;
-            background: rgba(76, 175, 80, 0.2);
-            border-radius: 50%;
-            text-align: center;
-            line-height: 24px;
-            margin-right: 12px;
-            color: #4CAF50;
-            font-weight: bold;
+        .footer-copy {
+            color: #555;
+            font-size: 0.82em;
         }
 
-            .toast {
-                position: fixed;
-                top: -100px;
-                left: 50%;
-                transform: translateX(-50%);
-                background: rgba(255, 255, 255, 0.05);
-                backdrop-filter: blur(20px);
-                color: #fff;
-                padding: 20px 30px;
-                border-radius: 15px;
-                border: 1px solid rgba(255,255,255,0.1);
-                box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
-                font-weight: 600;
-                z-index: 1000;
-                transition: top 0.5s ease, opacity 0.5s ease;
-                opacity: 0;
-            }
+        .footer-socials {
+            display: flex;
+            gap: 12px;
+        }
 
-            .toast.show {
-                top: 20px;
-                opacity: 1;
-            }
+        .footer-socials a {
+            color: #666;
+            text-decoration: none;
+            font-size: 1.2em;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
 
+        .footer-socials a:hover {
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        /* ============================================
+           RESPONSIVE — mobile
+           ============================================ */
         @media (max-width: 768px) {
             body {
-                padding: 10px;
+                padding: 12px;
+                padding-top: 76px;
+            }
+
+            .dashboard {
+                gap: 16px;
+            }
+
+            /* Navbar mobile */
+            .navbar-links {
+                display: none;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: rgba(15, 15, 15, 0.95);
+                backdrop-filter: blur(24px);
+                -webkit-backdrop-filter: blur(24px);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+                padding: 12px 20px;
+                gap: 4px;
+            }
+
+            .navbar-links.open {
+                display: flex;
+            }
+
+            .navbar-links a {
+                padding: 12px 16px;
+                font-size: 0.95em;
+                width: 100%;
+            }
+
+            .navbar-toggle {
+                display: flex;
+            }
+
+            .header {
+                padding: 24px;
             }
 
             .header-content {
                 flex-direction: column;
+                align-items: center;
                 text-align: center;
-                gap: 20px;
+                gap: 16px;
             }
 
             .profile-photo {
                 margin: 0 auto;
+                width: 110px;
+                height: 110px;
             }
 
-            h1 {
-                font-size: 2em;
+            .header-text h1 {
+                font-size: 1.8em;
             }
 
-            .subtitle, .about {
+            .subtitle {
                 font-size: 0.95em;
             }
 
-            .grid {
-                grid-template-columns: 1fr;
-                gap: 15px;
+            .header-about {
+                font-size: 0.9em;
             }
 
             .card {
-                padding: 20px;
+                padding: 22px;
             }
 
             .card-icon {
-                width: 50px;
-                height: 50px;
-                font-size: 24px;
+                width: 48px;
+                height: 48px;
+                font-size: 22px;
+                border-radius: 12px;
+            }
+
+            .experience-grid {
+                grid-template-columns: 1fr;
+                gap: 0;
             }
 
             .skill-tag {
-                font-size: 0.8em;
-                padding: 6px 12px;
+                font-size: 0.82em;
+                padding: 6px 13px;
             }
 
-            .contact-btn, .cv-btn {
+            .contact-btn,
+            .cv-btn {
                 padding: 10px 20px;
                 font-size: 0.9em;
             }
+
+            .contact-links {
+                gap: 10px;
+            }
+
+            /* Footer mobile */
+            .footer-inner {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 8px;
+                padding-top: 72px;
+            }
+
+            .header {
+                padding: 18px;
+            }
+
+            .card {
+                padding: 18px;
+                border-radius: 16px;
+            }
+
+            .header-text h1 {
+                font-size: 1.5em;
+            }
+
+            .contact-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .contact-btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .footer {
+                padding: 24px 18px 20px;
+            }
         }
     </style>
-    
 </head>
-<body>
-    <div class="dashboard">
-    <div class="header">
-        <div class="header-content">
-            <div class="profile-photo">
-                <img src="./ppmaxime.png" alt="Photo de profil de Maxime Rombouts">
-            </div>
-            <div class="header-text">
-                <h1>Maxime Rombouts</h1>
-                <p class="subtitle">Support Informatique et Maintenance Informatique</p>
-                
-                <div class="header-info">
-                    <div class="info-block">
-                        <div class="info-label">📍 Localisation</div>
-                        <div class="info-value">Wattrelos, France</div>
-                    </div>
-                    <div class="info-block">
-                        <div class="info-label">🎯 Spécialisation</div>
-                        <div class="info-value">Support & Répération Informatique</div>
-                    </div>
-                </div>
 
-                <div class="header-about">
-                    <strong>À propos :</strong> Passionné par l'informatique et les technologies, je suis spécialisé dans le support informatique, la maintenance système et l'administration réseau. Mon parcours combine formation technique en infrastructures et expérience pratique en développement web, me permettant d'avoir une vision complète des systèmes d'information.
+<body>
+    <!-- ========== NAVBAR ========== -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar-inner">
+            <a href="#top" class="navbar-brand">Maxime Rombouts</a>
+            <button class="navbar-toggle" id="nav-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="navbar-links" id="nav-links">
+                <li><a href="#formations">Formations</a></li>
+                <li><a href="#experience">Expérience</a></li>
+                <li><a href="#competences">Compétences</a></li>
+                <li><a href="#certifications">Certifications</a></li>
+                <li><a href="#projets">Projets</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="dashboard" id="top">
+
+        <!-- ========== HEADER ========== -->
+        <div class="header">
+            <div class="header-content">
+                <div class="profile-photo">
+                    <img src="./ppmaxime.png" alt="Photo de profil de Maxime Rombouts">
+                </div>
+                <div class="header-text">
+                    <h1>Maxime Rombouts</h1>
+                    <p class="subtitle">Support Informatique et Maintenance Informatique</p>
+
+                    <div class="header-info">
+                        <div class="info-block">
+                            <div class="info-label">📍 Localisation</div>
+                            <div class="info-value">Wattrelos, France</div>
+                        </div>
+                        <div class="info-block">
+                            <div class="info-label">🎯 Spécialisation</div>
+                            <div class="info-value">Support & Réparation Informatique</div>
+                        </div>
+                    </div>
+
+                    <div class="header-about">
+                        <strong>À propos :</strong> Passionné par l'informatique et les technologies, je suis spécialisé
+                        dans le support informatique, la maintenance système et l'administration réseau. Mon parcours
+                        combine formation technique en infrastructures et expérience pratique en développement web, me
+                        permettant d'avoir une vision complète des systèmes d'information.
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-        <div class="grid">
+        <!-- ========== FORMATIONS ========== -->
+        <div class="card" id="formations">
+            <div class="card-icon">🎓</div>
+            <h3>Formations</h3>
 
-            <div class="card">
-                <div class="card-icon">🎓</div>
-                <h3>Formations</h3>
-
+            <div class="experience-list">
                 <div class="experience-item">
                     <div class="exp-title">BTS Services Informatiques aux Organisations</div>
                     <div class="exp-company">Option SISR - Solutions d'Infrastructure, Systèmes et Réseaux</div>
@@ -642,8 +1005,10 @@
                     <div class="extra-year">Obtention & Niveau Baccalauréat professionnel</div>
                 </div>
             </div>
+        </div>
 
-        <div class="card">
+        <!-- ========== EXPÉRIENCE PRO ========== -->
+        <div class="card" id="experience">
             <div class="card-icon">📊</div>
             <h3>Expérience Professionnelle</h3>
 
@@ -682,7 +1047,7 @@
                         <div class="exp-company">Lycées Saint Vincent de Paul / Notre Dame du Sacré Cœur</div>
                         <div class="exp-period">2021 - Stage 1 mois</div>
                     </div>
-                        <div class="experience-item">
+                    <div class="experience-item">
                         <div class="exp-title">Technicien Support Informatique</div>
                         <div class="exp-company">Mairie de Wattrelos - Service Informatique</div>
                         <div class="exp-period">2021 - Stage 1 mois</div>
@@ -696,166 +1061,331 @@
             </div>
         </div>
 
-            <div class="card">
-                <div class="card-icon">💻</div>
-                <h3>Compétences Réseau & Développement</h3>
-                <p>Configuration et maintenance d'infrastructures réseau, ainsi que développement web front-end et back-end</p>
-                <div class="skills">
-                    <!-- Réseau -->
-                    <span class="skill-tag">Installation réseau</span>
-                    <span class="skill-tag">Dépannage réseau</span>
-                    <span class="skill-tag">Cisco</span>
-                    <span class="skill-tag">DNS/DHCP</span>
-                    <span class="skill-tag">Wi-Fi</span>
-                    <!-- Développement -->
-                    <span class="skill-tag">HTML</span>
-                    <span class="skill-tag">CSS</span>
-                    <span class="skill-tag">Java</span>
-                    <span class="skill-tag">JavaScript</span>
-                    <span class="skill-tag">Vue.js</span>
-                    <span class="skill-tag">React.js</span>
-                    <span class="skill-tag">Python</span>
-                </div>
+        <!-- ========== COMPÉTENCES RÉSEAU ========== -->
+        <div class="card" id="competences">
+            <div class="card-icon">🌐</div>
+            <h3>Compétences Réseau</h3>
+            <p>Configuration, maintenance et dépannage d'infrastructures réseau</p>
+            <div class="skills">
+                <span class="skill-tag">Installation réseau</span>
+                <span class="skill-tag">Dépannage réseau</span>
+                <span class="skill-tag">Cisco</span>
+                <span class="skill-tag">DNS/DHCP</span>
+                <span class="skill-tag">Wi-Fi</span>
+                <span class="skill-tag">Linux</span>
+                <span class="skill-tag">Windows</span>
+                <span class="skill-tag">MacOS</span>
+                <span class="skill-tag">Cisco</span>
+                <span class="skill-tag">VirtualBox</span>
+                <span class="skill-tag">Virtualisation</span>
+                <span class="skill-tag">Cloud</span>
+                <span class="skill-tag">Microsoft 365</span>
+                <span class="skill-tag">Windows Server</span>
+                <span class="skill-tag">Active Directory</span>
+                <span class="skill-tag">Microsoft Teams</span>
             </div>
-
-            <div class="card">
-                <div class="card-icon">🧰</div>
-                <h3>Compétences Matérielles</h3>
-                <p>Expertise en maintenance, diagnostic et installation de matériel informatique</p>
-                <div class="skills">
-                    <span class="skill-tag">Montage et démontage PC</span>
-                    <span class="skill-tag">Support Utilisateur</span>
-                    <span class="skill-tag">Remplacement de composants</span>
-                    <span class="skill-tag">Support Informatique</span>
-                    <span class="skill-tag">Installation périphériques</span>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-icon">📜</div>
-                <h3>Certifications & Badges</h3>
-                <div class="certification-list">
-                    <div class="cert-item">
-                        <div class="cert-icon">🖥️</div>
-                        <div class="cert-info">
-                            <div class="cert-name">Badge - Gérer Active Directory Domain Services à l'aide de cmdlets PowerShell</div>
-                            <div class="cert-date">Obtenu en 2025</div>
-                            <div class="cert-source">Source : Microsoft Learn</div>
-                        </div>
-                    </div>
-                    <div class="cert-item">
-                        <div class="cert-icon">⚙️</div>
-                        <div class="cert-info">
-                            <div class="cert-name">Badge - Gérer les paramètres de Windows Server avec les applets de commande PowerShell</div>
-                            <div class="cert-date">Obtenu en 2025</div>
-                            <div class="cert-source">Source : Microsoft Learn</div>
-                        </div>
-                    </div>
-                    <div class="cert-item">
-                        <div class="cert-icon">🌐</div>
-                        <div class="cert-info">
-                            <div class="cert-name">Badge - Gérer les paramètres de service réseau pour les appareils Windows avec les applets de commande PowerShell</div>
-                            <div class="cert-date">Obtenu en 2025</div>
-                            <div class="cert-source">Source : Microsoft Learn</div>
-                        </div>
-                    </div>
-                    <div class="cert-item">
-                        <div class="cert-icon">💻</div>
-                        <div class="cert-info">
-                            <div class="cert-name">Badge - Gérer les paramètres d'un ordinateur Windows local avec les applets de commande PowerShell</div>
-                            <div class="cert-date">Obtenu en 2025</div>
-                            <div class="cert-source">Source : Microsoft Learn</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-icon">🌟</div>
-                <h3>Passions & Intérêts</h3>
-                <p>Ce qui me motive et me passionne dans la vie de tous les jours, en dehors de l'informatique.</p>
-                <div class="skills">
-                    <span class="skill-tag">Histoire Moderne</span>
-                    <span class="skill-tag">Jeux Vidéo</span>
-                    <span class="skill-tag">Documentaire Historique</span>
-                    <span class="skill-tag">Culture Générale</span>
-                    <span class="skill-tag">Cinéma & Film</span>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-icon">📂</div>
-                <h3>Télécharger mon CV</h3>
-                <p>Consultez mon parcours complet et mes compétences détaillées dans mon CV au format PDF.</p>
-                <div class="cv-download">
-                    <a href="./CVROMBOUTS2025.pdf" download class="cv-btn">⬇️ Télécharger le CV</a>
-                </div>
-            </div>
-
-            <div class="contact-card">
-                <h2>Contactez-moi</h2>
-                <p class="subtitle">Pour d'autres informations, demandes ou collaborations</p>
-                <div class="contact-links">
-                    <a href="#" id="email-btn" class="contact-btn">📧 Email</a>
-                    <a href="#" id="phone-btn" class="contact-btn">📱 Téléphone</a>
-                    <a href="https://www.linkedin.com/in/maxime-rombouts/" target="_blank" class="contact-btn">💼 LinkedIn</a>
-                    <a href="https://github.com/Maxime-Rombouts" target="_blank" class="contact-btn">🐱 GitHub</a>
-                </div>
-            </div>
-                <div id="phone-toast" class="toast">
-                    📞 Mon numéro : <strong>+33 7 83 87 70 74</strong>
-                </div>
-                <div id="email-toast" class="toast">
-                    ✉️ Mon email : <strong>mromboutsldv@gmail.com</strong>
-                </div>
         </div>
+
+        <!-- ========== COMPÉTENCES DÉVELOPPEMENT ========== -->
+        <div class="card" id="developpement">
+            <div class="card-icon">💻</div>
+            <h3>Compétences Développement</h3>
+            <p>Développement web front-end et back-end</p>
+            <div class="skills">
+                <span class="skill-tag">HTML</span>
+                <span class="skill-tag">CSS</span>
+                <span class="skill-tag">Java</span>
+                <span class="skill-tag">JavaScript</span>
+                <span class="skill-tag">Vue.js</span>
+                <span class="skill-tag">React.js</span>
+                <span class="skill-tag">Python</span>
+                <span class="skill-tag">PHP</span>
+                <span class="skill-tag">SQL</span>
+                <span class="skill-tag">Git</span>
+                <span class="skill-tag">GitHub</span>
+                <span class="skill-tag">Microsoft PowerShell</span>
+                <span class="skill-tag">CMS</span>
+                <span class="skill-tag">Wordpress</span>
+                <span class="skill-tag">Prestashop</span>
+                <span class="skill-tag">Shopify</span>
+                <span class="skill-tag">Wix</span>
+            </div>
+        </div>
+
+        <!-- ========== COMPÉTENCES MATÉRIELLES ========== -->
+        <div class="card">
+            <div class="card-icon">🧰</div>
+            <h3>Compétences Matérielles</h3>
+            <p>Expertise en maintenance, diagnostic et installation de matériel informatique</p>
+            <div class="skills">
+                <span class="skill-tag">Montage et démontage PC</span>
+                <span class="skill-tag">Support Utilisateur</span>
+                <span class="skill-tag">Remplacement de composants</span>
+                <span class="skill-tag">Support Informatique</span>
+                <span class="skill-tag">Installation périphériques</span>
+                <span class="skill-tag">Dépannage matériel</span>
+                <span class="skill-tag">Maintenance préventive</span>
+                <span class="skill-tag">Maintenance logicielle</span>
+                <span class="skill-tag">Maintenance matérielle</span>
+                <span class="skill-tag">Maintenance système</span>
+            </div>
+        </div>
+
+        <!-- ========== CERTIFICATIONS ========== -->
+        <div class="card" id="certifications">
+            <div class="card-icon">📜</div>
+            <h3>Certifications & Badges</h3>
+            <div class="certification-list">
+                <div class="cert-item">
+                    <div class="cert-icon">🖥️</div>
+                    <div class="cert-info">
+                        <div class="cert-name">Badge - Gérer Active Directory Domain Services à l'aide de cmdlets
+                            PowerShell</div>
+                        <div class="cert-date">Obtenu en 2025</div>
+                        <div class="cert-source">Source : Microsoft Learn</div>
+                    </div>
+                </div>
+                <div class="cert-item">
+                    <div class="cert-icon">⚙️</div>
+                    <div class="cert-info">
+                        <div class="cert-name">Badge - Gérer les paramètres de Windows Server avec les applets de
+                            commande PowerShell</div>
+                        <div class="cert-date">Obtenu en 2025</div>
+                        <div class="cert-source">Source : Microsoft Learn</div>
+                    </div>
+                </div>
+                <div class="cert-item">
+                    <div class="cert-icon">🌐</div>
+                    <div class="cert-info">
+                        <div class="cert-name">Badge - Gérer les paramètres de service réseau pour les appareils
+                            Windows avec les applets de commande PowerShell</div>
+                        <div class="cert-date">Obtenu en 2025</div>
+                        <div class="cert-source">Source : Microsoft Learn</div>
+                    </div>
+                </div>
+                <div class="cert-item">
+                    <div class="cert-icon">💻</div>
+                    <div class="cert-info">
+                        <div class="cert-name">Badge - Gérer les paramètres d'un ordinateur Windows local avec les
+                            applets de commande PowerShell</div>
+                        <div class="cert-date">Obtenu en 2025</div>
+                        <div class="cert-source">Source : Microsoft Learn</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== PROJETS ========== -->
+        <div class="card" id="projets">
+            <div class="card-icon">🚀</div>
+            <h3>Projets</h3>
+
+            <div class="experience-list">
+                <div class="experience-item">
+                    <div class="exp-title">Portfolio Professionnel</div>
+                    <div class="exp-company">Conception et développement d'un portfolio pour présenter mon parcours, mes compétences et mes expériences professionnelles.</div>
+                    <div class="skills" style="margin-top: 10px;">
+                        <span class="skill-tag">HTML</span>
+                        <span class="skill-tag">CSS</span>
+                        <span class="skill-tag">JavaScript</span>
+                    </div>
+                </div>
+                <div class="experience-item">
+                    <div class="exp-title">AP2 Mission 1 SISR — Initialisation Réseau (Entreprise GSB)</div>
+                    <div class="exp-company">Étude et maquettage d'une infrastructure réseau d'entreprise : reproduction du fonctionnement réseau sur deux PC physiques via virtualisation, configuration des serveurs, routage inter-VLAN, séparation des flux et périmètres de sécurité.</div>
+                    <div class="skills" style="margin-top: 10px;">
+                        <span class="skill-tag">Windows Server</span>
+                        <span class="skill-tag">Virtualisation</span>
+                        <span class="skill-tag">DNS/DHCP</span>
+                        <span class="skill-tag">Routage</span>
+                        <span class="skill-tag">Active Directory</span>
+                        <span class="skill-tag">Sécurité Réseau</span>
+                    </div>
+                </div>
+                <div class="experience-item">
+                    <div class="exp-title">AP2 Mission 2 SISR — Architecture Sécurisée (Entreprise GSB)</div>
+                    <div class="exp-company">Implémentation d'une architecture technique sécurisée : déploiement d'un site web HTTPS, serveurs FTP, base de données, pare-feu avec DMZ, authentification des utilisateurs et filtrage applicatif pour garantir la sécurité du SI.</div>
+                    <div class="skills" style="margin-top: 10px;">
+                        <span class="skill-tag">Linux</span>
+                        <span class="skill-tag">Windows Server</span>
+                        <span class="skill-tag">HTTPS</span>
+                        <span class="skill-tag">FTP</span>
+                        <span class="skill-tag">Base de données</span>
+                        <span class="skill-tag">Pare-feu / DMZ</span>
+                        <span class="skill-tag">Sécurité Réseau</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== PASSIONS ========== -->
+        <div class="card">
+            <div class="card-icon">🌟</div>
+            <h3>Passions & Intérêts</h3>
+            <p>Ce qui me motive et me passionne dans la vie de tous les jours, en dehors de l'informatique.</p>
+            <div class="skills">
+                <span class="skill-tag">Histoire Moderne</span>
+                <span class="skill-tag">Jeux Vidéo</span>
+                <span class="skill-tag">Culture Générale</span>
+                <span class="skill-tag">Cinéma & Film</span>
+            </div>
+        </div>
+
+        <!-- ========== TÉLÉCHARGER CV ========== -->
+        <div class="card">
+            <div class="card-icon">📂</div>
+            <h3>Télécharger mon CV</h3>
+            <p>Consultez mon parcours complet et mes compétences détaillées dans mon CV au format PDF.</p>
+            <div class="cv-download">
+                <a href="./cvrombouts.pdf" download class="cv-btn">⬇️ Télécharger le CV</a>
+            </div>
+        </div>
+
+        <!-- ========== CONTACT ========== -->
+        <div class="contact-card" id="contact">
+            <h2>Contactez-moi</h2>
+            <p class="subtitle">Pour d'autres informations, demandes ou collaborations</p>
+            <div class="contact-links">
+                <a href="#" id="email-btn" class="contact-btn">📧 Email</a>
+                <a href="#" id="phone-btn" class="contact-btn">📱 Téléphone</a>
+                <a href="https://www.linkedin.com/in/maxime-rombouts/" target="_blank" class="contact-btn">💼
+                    LinkedIn</a>
+                <a href="https://github.com/Maxime-Rombouts" target="_blank" class="contact-btn">🐱 GitHub</a>
+            </div>
+        </div>
+
+        <!-- Toasts -->
+        <div id="phone-toast" class="toast">
+            📞 Mon numéro : <strong>+33 7 83 87 70 74</strong>
+        </div>
+        <div id="email-toast" class="toast">
+            ✉️ Mon email : <strong>mromboutsldv@gmail.com</strong>
+        </div>
+
+        <!-- ========== FOOTER ========== -->
+        <footer class="footer">
+            <div class="footer-inner">
+                <div class="footer-brand">
+                    <h4>Maxime Rombouts</h4>
+                    <p>Technicien Support Informatique & Maintenance — Passionné par les infrastructures réseau et le développement web.</p>
+                </div>
+                <div class="footer-col">
+                    <h5>Navigation</h5>
+                    <ul>
+                        <li><a href="#formations">Formations</a></li>
+                        <li><a href="#experience">Expérience</a></li>
+                        <li><a href="#competences">Compétences</a></li>
+                        <li><a href="#certifications">Certifications</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h5>Liens</h5>
+                    <ul>
+                        <li><a href="https://www.linkedin.com/in/maxime-rombouts/" target="_blank">LinkedIn</a></li>
+                        <li><a href="https://github.com/Maxime-Rombouts" target="_blank">GitHub</a></li>
+                        <li><a href="./cvrombouts.pdf" download>Télécharger CV</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="footer-divider">
+            <div class="footer-bottom">
+                <span class="footer-copy">© <span id="footer-year"></span> Maxime Rombouts — Tous droits réservés</span>
+                <div class="footer-socials">
+                    <a href="https://www.linkedin.com/in/maxime-rombouts/" target="_blank" title="LinkedIn">💼</a>
+                    <a href="https://github.com/Maxime-Rombouts" target="_blank" title="GitHub">🐱</a>
+                </div>
+            </div>
+        </footer>
     </div>
 
-<script>
-    const phoneBtn = document.getElementById('phone-btn');
-    const phoneToast = document.getElementById('phone-toast');
-    const emailBtn = document.getElementById('email-btn');
-    const emailToast = document.getElementById('email-toast');
+    <script>
+        // === Dynamic year ===
+        document.getElementById('footer-year').textContent = new Date().getFullYear();
 
-    // Fonction pour gérer le toast avec pause au survol
-    function showToast(toast, duration = 2500) {
-        toast.classList.add('show');
+        // === Toast system ===
+        const phoneBtn = document.getElementById('phone-btn');
+        const phoneToast = document.getElementById('phone-toast');
+        const emailBtn = document.getElementById('email-btn');
+        const emailToast = document.getElementById('email-toast');
 
-        let hideTimeout;
+        function showToast(toast, duration = 2500) {
+            toast.classList.add('show');
+            let hideTimeout;
 
-        // Lance le timer pour cacher le toast
-        function startTimer() {
-            hideTimeout = setTimeout(() => {
-                toast.classList.remove('show');
-            }, duration);
+            function startTimer() {
+                hideTimeout = setTimeout(() => {
+                    toast.classList.remove('show');
+                }, duration);
+            }
+
+            startTimer();
+
+            toast.addEventListener('mouseenter', () => {
+                clearTimeout(hideTimeout);
+            });
+
+            toast.addEventListener('mouseleave', () => {
+                startTimer();
+            });
         }
 
-        startTimer();
-
-        // Pause le timer quand la souris est dessus
-        toast.addEventListener('mouseenter', () => {
-            clearTimeout(hideTimeout);
+        phoneBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            showToast(phoneToast);
         });
 
-        // Reprend le timer quand la souris sort
-        toast.addEventListener('mouseleave', () => {
-            startTimer();
+        emailBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            showToast(emailToast);
         });
-    }
 
-    // Click sur le bouton téléphone
-    phoneBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        showToast(phoneToast);
-    });
+        // === Navbar: hamburger toggle ===
+        const navToggle = document.getElementById('nav-toggle');
+        const navLinks = document.getElementById('nav-links');
 
-    // Click sur le bouton email
-    emailBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        showToast(emailToast);
-    });
-</script>
+        navToggle.addEventListener('click', () => {
+            navToggle.classList.toggle('open');
+            navLinks.classList.toggle('open');
+        });
 
+        // Close mobile menu when a link is clicked
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navToggle.classList.remove('open');
+                navLinks.classList.remove('open');
+            });
+        });
 
+        // === Navbar: scroll effects ===
+        const navbar = document.getElementById('navbar');
+        const sections = document.querySelectorAll('[id]');
+        const navItems = navLinks.querySelectorAll('a');
+
+        window.addEventListener('scroll', () => {
+            // Darken navbar on scroll
+            if (window.scrollY > 40) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+
+            // Highlight active section
+            let current = '';
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= 120) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('href') === '#' + current) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
 </body>
+
 </html>
